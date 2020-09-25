@@ -1,0 +1,7 @@
+import iostream
+
+use std::cout
+
+fn main(){
+    cout<<"Hello Zle_2 world!"
+}

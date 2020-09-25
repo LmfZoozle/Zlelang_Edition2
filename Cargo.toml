@@ -7,5 +7,5 @@ edition = "2018"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-zoozle = "0.1.2"
-#zoozle={path="/home/zoozle/Code/Rust/Library/zoozle"}
+zoozle = "0.1.4"
+ansi_term = "0.12"
