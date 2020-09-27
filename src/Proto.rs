@@ -1,5 +1,5 @@
 use super::*;
-
+use std::process::exit;
 pub enum Token {
     ADD,
     SUB,
@@ -7,7 +7,12 @@ pub enum Token {
 
 pub fn add_sub(line: &String) {
     let mut run: Vec<&str> = line.split_whitespace().collect();
-    println!("mov rax, {}", run[0]);
+    if let Ok(a)=run[0].parse::<i32>(){
+        println!("mov rax, {}", run[0]);
+    }else{
+        eprintln!("First_Invalid:Abort!");
+        exit(88);
+    }
     run.remove(0);
     let mut it = run.iter();
     loop {
