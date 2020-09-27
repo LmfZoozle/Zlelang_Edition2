@@ -1,7 +1,1 @@
-import iostream
-
-use std::cout
-
-fn main(){
-    cout<<"Hello Zle_2 world!"
-}
+110 + 8 - 2

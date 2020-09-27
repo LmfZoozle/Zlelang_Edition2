@@ -9,3 +9,5 @@ edition = "2018"
 [dependencies]
 zoozle = "0.1.4"
 ansi_term = "0.12"
+lazy_static = "1.4.0"
+chrono = "0.4.18"
