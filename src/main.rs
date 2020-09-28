@@ -78,11 +78,15 @@ fn main() {
     println!(".global main");
     println!("main:");
 
-    let mut top_of_calc:Vec<&Proto::Node>=Vec::new();
+//    let mut top_of_calc:Vec<&Proto::Node>=Vec::new();
     
+    let mut a=source_code.split_whitespace().collect::<Vec<&str>>();
+    let mut running=a.iter();
+    let mut TopOfNode= Proto::I_hate_recursion_but_create_tree(&mut running);
+    Proto::gen_code_to_beat_recursion(TopOfNode);
 
     println!("ret");
 
     let end = start.elapsed();
-    eprintln!("{} {}.{:03}",Green.paint("Finished in "), end.as_secs(), end.subsec_nanos() / 1_000_000);
+    eprintln!("{} {}.{:03} s",Green.paint("Finished in "), end.as_secs(), end.subsec_nanos() / 1_000_000);
 }

@@ -11,7 +11,17 @@ pub enum Ope {
 pub enum Node {
     NUM(i32),
     OPE(Box<Node>, Box<Node>, Ope),
-    EOF
+    EOF,
+}
+
+impl Node {
+    pub fn get_value(&self) -> Option<i32> {
+        if let Node::NUM(a) = self {
+            Some(*a)
+        } else {
+            None
+        }
+    }
 }
 
 /*pub fn new_node_ope(top:&mut Node,ty:Ope,lhs:Box<Node>,rhs:Box<Node>)->Box<Node>{
@@ -27,11 +37,10 @@ pub fn num_new(val: i32) -> Box<Node> {
     Box::new(Node::NUM(val))
 }
 
-
-pub fn is_num(line:&str)->bool{
-    if let Ok(a)=line.parse::<i32>(){
+pub fn is_num(line: &str) -> bool {
+    if let Ok(a) = line.parse::<i32>() {
         true
-    }else{
+    } else {
         false
     }
 }
@@ -42,32 +51,62 @@ pub fn is_num(line:&str)->bool{
 //再帰処理を使わずに再帰的な型を作れるのか？
 //NUMならNODE作って付け足す　そしてブレイク
 
+pub fn gen_code_to_beat_recursion(target: Box<Node>) {
+    if let Node::NUM(a) = *target {
+        println!("  push {}", a);
+    }
+
+    if let Node::OPE(a, b, c) = *target {
+        gen_code_to_beat_recursion(a);
+        gen_code_to_beat_recursion(b);
+
+        match c {
+            Ope::ADD => {
+                println!("  add rax, rdi");
+                return;
+            }
+            Ope::SUB => {
+                println!("  add rax, rdi");
+                return;
+            }
+            Ope::MUL => {
+                println!("  add rax, rdi");
+                return;
+            }
+            Ope::DIV => {
+                println!("  add rax, rdi");
+                return;
+            }
+        }
+    }
+    println!("  push rax");
+}
+
 //おつ　バグあるだろうけど
-pub fn I_hate_recursion_but_create_tree(run_iter: &mut std::slice::Iter<&str>)->Box<Node>{
+pub fn I_hate_recursion_but_create_tree(run_iter: &mut std::slice::Iter<&str>) -> Box<Node> {
     if let Some(content) = run_iter.next() {
-        
         match *content {
-            _ if is_num(content)=>{
+            _ if is_num(content) => {
                 return num_new(content.parse::<i32>().unwrap());
             }
             "+" => {
-                let Left=I_hate_recursion_but_create_tree(run_iter);
-                let Right=I_hate_recursion_but_create_tree(run_iter);
+                let Left = I_hate_recursion_but_create_tree(run_iter);
+                let Right = I_hate_recursion_but_create_tree(run_iter);
                 return ope_new(Left, Right, Ope::ADD);
             }
-            "-"=>{
-                let Left=I_hate_recursion_but_create_tree(run_iter);
-                let Right=I_hate_recursion_but_create_tree(run_iter);
+            "-" => {
+                let Left = I_hate_recursion_but_create_tree(run_iter);
+                let Right = I_hate_recursion_but_create_tree(run_iter);
                 return ope_new(Left, Right, Ope::SUB);
             }
-            "*"=>{
-                let Left=I_hate_recursion_but_create_tree(run_iter);
-                let Right=I_hate_recursion_but_create_tree(run_iter);
+            "*" => {
+                let Left = I_hate_recursion_but_create_tree(run_iter);
+                let Right = I_hate_recursion_but_create_tree(run_iter);
                 return ope_new(Left, Right, Ope::MUL);
             }
-            "/"=>{
-                let Left=I_hate_recursion_but_create_tree(run_iter);
-                let Right=I_hate_recursion_but_create_tree(run_iter);
+            "/" => {
+                let Left = I_hate_recursion_but_create_tree(run_iter);
+                let Right = I_hate_recursion_but_create_tree(run_iter);
                 return ope_new(Left, Right, Ope::DIV);
             }
             _ => {
@@ -75,7 +114,7 @@ pub fn I_hate_recursion_but_create_tree(run_iter: &mut std::slice::Iter<&str>)->
                 exit(99)
             }
         }
-    }else{
+    } else {
         Box::new(Node::EOF)
     }
 }

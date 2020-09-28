@@ -1,12 +1,6 @@
 .intel_syntax noprefix
 .global main
 main:
-mov rax, 110
-add rax, 44
-sub rax, 88
-add rax, 55
-sub rax, 99
-add rax, 5
-add rax, 66
-add rax, 22
+  push 11
+  push rax
 ret
