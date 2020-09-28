@@ -7,4 +7,6 @@ sub rax, 88
 add rax, 55
 sub rax, 99
 add rax, 5
+add rax, 66
+add rax, 22
 ret

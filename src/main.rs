@@ -78,7 +78,9 @@ fn main() {
     println!(".global main");
     println!("main:");
 
-    Proto::add_sub(&source_code);
+    let mut top_of_calc:Vec<&Proto::Node>=Vec::new();
+    
+
     println!("ret");
 
     let end = start.elapsed();
