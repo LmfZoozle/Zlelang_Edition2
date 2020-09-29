@@ -82,8 +82,10 @@ fn main() {
     
     let mut a=source_code.split_whitespace().collect::<Vec<&str>>();
     let mut running=a.iter();
-    let mut TopOfNode= Proto::I_hate_recursion_but_create_tree(&mut running);
+/*    let mut TopOfNode= Proto::I_hate_recursion_but_create_tree(&mut running);
     Proto::gen_code_to_beat_recursion(TopOfNode);
+*/
+
 
     println!("ret");
 

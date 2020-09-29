@@ -1,6 +1,82 @@
 use super::*;
 use std::process::exit;
 
+pub enum Binary {
+    NUM(i32),
+    EOF,
+    OPE(Box<Binary>, Box<Binary>, Ope),
+}
+
+//staticはやめよう
+//static mut GEN:Binary=
+
+pub fn new_ope(left: Box<Binary>, right: Box<Binary>, op: Ope) -> Box<Binary> {
+    Box::new(Binary::OPE(left, right, op))
+}
+
+pub fn new_num(val: i32) -> Box<Binary> {
+    Box::new(Binary::NUM(val))
+}
+
+pub fn expr(run: &mut std::slice::Iter<&str>) -> Box<Binary> {
+    let mut node = mul(run);
+
+    loop {
+        let a = *run.next().unwrap();
+        if a == "+" {
+            node = new_ope(node, mul(run), Ope::ADD);
+        } else if a == "-" {
+            node = new_ope(node, mul(run), Ope::SUB);
+        } else {
+            return node;
+        }
+    }
+}
+
+pub fn mul(run: &mut std::slice::Iter<&str>) -> Box<Binary> {
+    let mut node = primary(run);
+
+    loop {
+        let a = *run.next().unwrap();
+        if a == "*" {
+            node = new_ope(node, primary(run), Ope::MUL);
+        } else if a == "/" {
+            node = new_ope(node, primary(run), Ope::DIV);
+        } else {
+            return node;
+        }
+    }
+}
+
+pub fn primary(run: &mut std::slice::Iter<&str>) -> Box<Binary> {
+    let a=*run.next().unwrap();
+
+    if a=="("{
+        return expr(run);
+    }else{
+        return new_num(7);
+    }
+}
+
+pub fn ex_into_token(line: &String) -> Box<Binary> {
+    let mut thisnode = Box::new(Binary::EOF);
+    let mut spilt = line.split_whitespace().collect::<Vec<&str>>();
+    let mut run = spilt.iter();
+    loop {
+        if let Some(content) = run.next() {
+            match *content {
+                _ if is_num(content) => {}
+                "*" => {}
+                _ => {}
+            }
+        } else {
+            eprintln!("ファイル終端に到達");
+        }
+    }
+
+    thisnode
+}
+
 pub enum TripleNode {
     NUM(i32),
     //parent,left,right
