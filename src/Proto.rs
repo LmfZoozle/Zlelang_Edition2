@@ -1,12 +1,71 @@
 use super::*;
 use std::process::exit;
+
+pub enum TripleNode {
+    NUM(i32),
+    //parent,left,right
+    OPE(
+        Option<Box<TripleNode>>,
+        Box<TripleNode>,
+        Box<TripleNode>,
+        Ope,
+    ),
+    EOF,
+    EXPR(Box<TripleNode>),
+}
+
+/*
+pub fn stacking_read_into_tokens(
+    top: & Box<TripleNode>,
+    line: String,
+    mut now: usize,
+) -> Box<TripleNode> {
+    let mut thisnode = Box::new(TripleNode::EOF);
+    let mut run = line.split_whitespace().collect::<Vec<&str>>();
+    //let mut run = a.iter();
+    now += 1;
+    if let Some(content) = run.get(now - 1) {
+        match *content {
+            _ if is_num(&content) => {
+                return Box::new(TripleNode::NUM(content.parse::<i32>().unwrap()));
+            }
+            "+" => {
+                return Box::new(TripleNode::OPE(
+                    None,
+                    stacking_read_into_tokens(&thisnode, line.clone(), now - 2),
+                    stacking_read_into_tokens(&thisnode, line, now),
+                    Ope::ADD,
+                ))
+            }
+            "-" => {
+                return Box::new(TripleNode::OPE(
+                    None,
+                    stacking_read_into_tokens(&thisnode, line.clone(), now - 2),
+                    stacking_read_into_tokens(&thisnode, line, now),
+                    Ope::SUB,
+                ))
+            }
+            //こっから違うぞ
+            "*" => {
+                return Box::new(TripleNode::OPE(
+                    Some(top),
+                    stacking_read_into_tokens(&mut thisnode, line.clone(), now - 2),
+                    stacking_read_into_tokens(&mut thisnode, line, now),
+                    Ope::MUL,
+                ))
+            }
+            "-" => {}
+            _ => {}
+        }
+    }
+    thisnode
+}*/
 pub enum Ope {
     ADD,
     SUB,
     MUL,
     DIV,
 }
-//頂点は任意子のポインタを持つ必要がある
 
 pub enum Node {
     NUM(i32),
@@ -83,6 +142,10 @@ pub fn gen_code_to_beat_recursion(target: Box<Node>) {
 }
 
 //おつ　バグあるだろうけど
+//->あった
+//ひでなこれ　なんでnextを適用したし
+//ちょっとこれ修正してやりなおす
+//いやこれ木の深さも考えてないか　ダメだ
 pub fn I_hate_recursion_but_create_tree(run_iter: &mut std::slice::Iter<&str>) -> Box<Node> {
     if let Some(content) = run_iter.next() {
         match *content {
