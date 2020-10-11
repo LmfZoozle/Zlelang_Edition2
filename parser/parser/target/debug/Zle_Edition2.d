@@ -1,0 +1,1 @@
+/home/zoozle/Code/Rust/Zle_Edition2/target/debug/Zle_Edition2: /home/zoozle/Code/Rust/Zle_Edition2/src/Error.rs /home/zoozle/Code/Rust/Zle_Edition2/src/Generator.rs /home/zoozle/Code/Rust/Zle_Edition2/src/Lex.rs /home/zoozle/Code/Rust/Zle_Edition2/src/Proto.rs /home/zoozle/Code/Rust/Zle_Edition2/src/main.rs
